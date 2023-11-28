@@ -5,21 +5,24 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import App from './App';
+import Root from './layouts/Root/Root';
+import Home from './pages/Home/Home';
+import BioData from './pages/Biodata/Biodata';
+
 
 
 const route = createBrowserRouter([
   {
     path: '/',
-    element: <App></App>,
+    element: <Root></Root>,
     children: [
       {
         path: '/',
-        element: <div>home</div>
+        element: <Home></Home>
       },
       {
-        path: 'about',
-        element: <div>about</div>
+        path: '/biodatas',
+        element: <BioData></BioData>
       }
     ]
   }

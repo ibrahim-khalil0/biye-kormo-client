@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Ephesis&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+
+
+
+.logo{
+    font-family: 'Poppins', sans-serif;
+}
+
+*{
+    font-family: 'Poppins', sans-serif;
+}
+.active{
+    color: #C48C46;
+}
+
+.carousel-status, .carousel .thumbs{
+    display: none;
+}
+
+h1, h2, h3, h4, h6, span{
+    font-family: "Playfair Display", serif;
+}
