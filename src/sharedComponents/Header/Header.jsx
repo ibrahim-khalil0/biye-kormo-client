@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../../Providers/AuthProviders';
 
 const Header = () => {
+    const {user, logOut} = useContext(AuthContext)
+    const handleLogOut = () => {
+        logOut()
+    }
+    const isPremium = true
     return (
         <div className='sm:flex justify-between items-center'>
             <div className='flex justify-center sm:justify-start items-center gap-1'>
@@ -13,7 +19,9 @@ const Header = () => {
                 <NavLink to={'/biodatas'}>Biodatas</NavLink>
                 <NavLink to={'/about'}>About Us</NavLink>
                 <NavLink to={'/contact'}>Contact</NavLink>
-                <NavLink to={'/login'}>Login</NavLink>
+                {
+                    user ? <NavLink to={'/dashboard'}>Dashboard</NavLink> : <NavLink to={'/login'}>Login</NavLink>
+                }
             </div>
         </div>
     );

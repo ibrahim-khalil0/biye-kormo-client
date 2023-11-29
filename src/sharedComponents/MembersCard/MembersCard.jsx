@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 const MembersCard = () => {
     return (
-        <div className="bg-white rounded-lg shadow-lg p-4 mb-8 w-80 text-center text-gray-600">
+        <div className="bg-white rounded-lg shadow-lg p-4 mb-8 text-center text-gray-600 relative">
+            <span className='absolute top-0 left-0 bg-blue-500 text-white rounded-br-sm text-[12px] px-1'>Premium</span>
             <span className="block mb-2"><b>Biodata Id:</b> 1</span>
             <span className="block text-[#CF902B] mb-2">Male</span>
             <img
@@ -16,7 +17,7 @@ const MembersCard = () => {
             <span className="block mb-2">
               <b>Occupation:</b> Student
             </span>
-            <Link to={'/'}><button className="bg-[#9D6824] text-white px-4 py-2 rounded-full font-bold hover:bg-[#F4C02A]">
+            <Link to={'/biodataDetails'}><button className="bg-[#9D6824] text-white px-4 py-2 rounded-full font-bold hover:bg-[#F4C02A]">
               View Profile
             </button></Link>
           </div>

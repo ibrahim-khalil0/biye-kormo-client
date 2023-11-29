@@ -25,3 +25,14 @@
 h1, h2, h3, h4, h6, span{
     font-family: "Playfair Display", serif;
 }
+
+input[type="range"] {
+    accent-color: #9D6824;
+  }
+
+.dashboard .active{
+    color: black
+}
+.dashboard a:hover{
+    color: black
+}

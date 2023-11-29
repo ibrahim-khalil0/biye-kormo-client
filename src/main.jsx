@@ -8,6 +8,17 @@ import {
 import Root from './layouts/Root/Root';
 import Home from './pages/Home/Home';
 import BioData from './pages/Biodata/Biodata';
+import BiodataDetails from './pages/BioDataDetails/BiodataDetails';
+import Login from './pages/Login/Login';
+import Register from './pages/Register/Register';
+import AuthProviders from './Providers/AuthProviders';
+import PrivateRoute from './PrivateRoute/PrivateRoute';
+import Checkout from './pages/Checkout/Checkout';
+import Dashboard from './layouts/Dashboard/Dashboard';
+import AdminDashboard from './dashboardPages/AdminPages/AdminDashboard';
+import Biodata from './dashboardPages/UserPages/Biodata';
+
+const isPremium = false
 
 
 
@@ -17,12 +28,38 @@ const route = createBrowserRouter([
     element: <Root></Root>,
     children: [
       {
+        path: '/login',
+        element: <Login></Login>
+      },
+      {
+        path: '/register',
+        element: <Register></Register>
+      },
+      {
         path: '/',
         element: <Home></Home>
       },
       {
         path: '/biodatas',
         element: <BioData></BioData>
+      },
+      {
+        path: `/checkout/:id`,
+        element: <Checkout></Checkout>
+      },
+      {
+        path: '/biodataDetails',
+        element: <PrivateRoute><BiodataDetails></BiodataDetails></PrivateRoute>
+      }
+    ]
+  },
+  {
+    path: '/dashboard',
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: '/dashboard',
+        element: isPremium ? <AdminDashboard></AdminDashboard> : <Biodata></Biodata>
       }
     ]
   }
@@ -30,6 +67,10 @@ const route = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={route}></RouterProvider>
+
+      <AuthProviders>
+        <RouterProvider router={route}></RouterProvider>
+      </AuthProviders>
+
   </React.StrictMode>,
 )

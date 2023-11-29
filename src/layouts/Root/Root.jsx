@@ -1,17 +1,24 @@
 import React from 'react';
 import Header from '../../sharedComponents/Header/Header';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import Footer from '../../sharedComponents/Footer/Footer';
 
 const Root = () => {
+    const location = useLocation()
+    console.log(location)
+    const noHeaderFooter = location.pathname.includes('login') || location.pathname.includes('register')
     return (
         <div className='max-w-[1600px] mx-auto'>
-            <div className='px-[5%] lg:px-[8%] shadow-md shadow-[#00000012] py-4'>
+            {
+                noHeaderFooter || <div className='px-[5%] lg:px-[8%] shadow-md shadow-[#00000012] py-4'>
                 <Header></Header>
                 
             </div>
+            }
             <Outlet></Outlet>
-            <Footer></Footer>
+            {
+                noHeaderFooter || <Footer></Footer>
+            }
         </div>
     );
 };
