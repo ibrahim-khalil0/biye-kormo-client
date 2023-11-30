@@ -1,10 +1,10 @@
-import { FaHome, FaRegEdit, FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaHome, FaRegEdit, FaRegHeart } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
 import { Link, NavLink, Outlet } from "react-router-dom";
 
 
 const Dashboard = () => {
-  const isAdmin = false;
+  const isAdmin = true;
   return (
     <div className="flex">
       <div className="bg-[#9D6824] min-h-screen w-64 px-8 py-8 text-white dashboard relative">
@@ -20,7 +20,7 @@ const Dashboard = () => {
         {isAdmin ? (
             // admin dashboard 
           <div className="text-white text-[18px] flex flex-col gap-6">
-            <NavLink to={"/dashboard"}>
+            <NavLink to={"/dashboard/admin"}>
               <div className="flex items-center gap-3">
                 <FaHome></FaHome>
                 <h5>Dashboard</h5>
@@ -38,7 +38,7 @@ const Dashboard = () => {
                 <h5>Approved Premium</h5>
               </div>
             </NavLink>
-            <NavLink to={"/dashboard/contactRequest"}>
+            <NavLink to={"/dashboard/contactRequestApproved"}>
               <div className="flex items-center gap-3">
                 <FaRegHeart></FaRegHeart>
                 <h5>Contact Request</h5>
@@ -54,7 +54,7 @@ const Dashboard = () => {
         ) : (
             // normal user dashboard 
           <div className="text-white text-[18px] flex flex-col gap-6">
-            <NavLink to={"/dashboard"}>
+            <NavLink to={"/dashboard/biodata"}>
               <div className="flex items-center gap-3">
                 <FaHome></FaHome>
                 <h5>View Biodata</h5>
@@ -80,7 +80,7 @@ const Dashboard = () => {
             </NavLink>
             <button
               type="button"
-              class="border absolute bottom-5 py-2 rounded-md hover:bg-white hover:text-[#9D6824] w-3/4"
+              className="border absolute bottom-5 py-2 rounded-md hover:bg-white hover:text-[#9D6824] w-3/4"
             >
               Logout
             </button>

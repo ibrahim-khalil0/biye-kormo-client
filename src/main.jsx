@@ -16,9 +16,15 @@ import PrivateRoute from './PrivateRoute/PrivateRoute';
 import Checkout from './pages/Checkout/Checkout';
 import Dashboard from './layouts/Dashboard/Dashboard';
 import AdminDashboard from './dashboardPages/AdminPages/AdminDashboard';
-import Biodata from './dashboardPages/UserPages/Biodata';
+import Biodata from './dashboardPages/UserPages/SelfBiodata';
+import EditBiodata from './dashboardPages/UserPages/EditBiodata';
+import MyContactRequest from './dashboardPages/UserPages/MyContactRequest';
+import Favorite from './dashboardPages/UserPages/Favorite';
+import ManageUsers from './dashboardPages/AdminPages/ManageUsers';
+import ApprovedPremium from './dashboardPages/AdminPages/ApprovedPremium';
+import ContactRequestApproved from './dashboardPages/AdminPages/ContactRequest';
 
-const isPremium = false
+const isPremium = true
 
 
 
@@ -53,6 +59,9 @@ const route = createBrowserRouter([
       }
     ]
   },
+
+
+  // dashboard related path 
   {
     path: '/dashboard',
     element: <Dashboard></Dashboard>,
@@ -60,6 +69,38 @@ const route = createBrowserRouter([
       {
         path: '/dashboard',
         element: isPremium ? <AdminDashboard></AdminDashboard> : <Biodata></Biodata>
+      },
+      {
+        path: 'biodata',
+        element: <Biodata></Biodata>
+      },
+      {
+        path: 'edit',
+        element: <EditBiodata></EditBiodata>
+      },
+      {
+        path: 'contactRequest',
+        element: <MyContactRequest></MyContactRequest>
+      },
+      {
+        path: 'favorite',
+        element: <Favorite></Favorite>
+      },
+      {
+        path: 'admin',
+        element: <AdminDashboard></AdminDashboard>
+      },
+      {
+        path: 'manageUser',
+        element: <ManageUsers></ManageUsers>
+      },
+      {
+        path: 'premiumRequest',
+        element: <ApprovedPremium></ApprovedPremium>
+      },
+      {
+        path: 'contactRequestApproved',
+        element: <ContactRequestApproved></ContactRequestApproved>
       }
     ]
   }

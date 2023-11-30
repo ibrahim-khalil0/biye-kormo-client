@@ -7,7 +7,6 @@ const Header = () => {
     const handleLogOut = () => {
         logOut()
     }
-    const isPremium = true
     return (
         <div className='sm:flex justify-between items-center'>
             <div className='flex justify-center sm:justify-start items-center gap-1'>
