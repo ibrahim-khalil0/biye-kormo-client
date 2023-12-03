@@ -30,6 +30,8 @@ import {
 import About from './pages/About/About';
 import AdminRoute from './AdminRoute/AdminRoute';
 import UserRoute from './UserRoute/UserRoute';
+import NormalUser from './NormalUser/NormalUser';
+import ContactUs from './ContactUs/ContactUs';
 
 const queryClient = new QueryClient()
 
@@ -40,6 +42,7 @@ const route = createBrowserRouter([
   {
     path: '/',
     element: <Root></Root>,
+    errorElement: <Error></Error>,
     children: [
       {
         path: '/login',
@@ -59,7 +62,7 @@ const route = createBrowserRouter([
       },
       {
         path: `/checkout/:id`,
-        element: <Checkout></Checkout>
+        element: <PrivateRoute><Checkout></Checkout></PrivateRoute>
       },
       {
         path: '/biodata/:id',
@@ -68,6 +71,10 @@ const route = createBrowserRouter([
       {
         path: '/about',
         element: <About></About>
+      },
+      {
+        path: '/contact',
+        element: <ContactUs></ContactUs>
       }
     ]
   },
@@ -76,23 +83,24 @@ const route = createBrowserRouter([
   // dashboard related path 
   {
     path: '/dashboard',
-    element: <Dashboard></Dashboard>,
+    element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+    errorElement: <Error></Error>,
     children: [
       {
         path: 'biodata',
-        element: <UserRoute><Biodata></Biodata></UserRoute>
+        element: <NormalUser><Biodata></Biodata></NormalUser>
       },
       {
         path: 'edit',
-        element: <UserRoute><EditBiodata></EditBiodata></UserRoute>
+        element: <NormalUser><EditBiodata></EditBiodata></NormalUser>
       },
       {
         path: 'contactRequest',
-        element: <UserRoute><MyContactRequest></MyContactRequest></UserRoute>
+        element: <NormalUser><MyContactRequest></MyContactRequest></NormalUser>
       },
       {
         path: 'favorite',
-        element: <UserRoute><Favorite></Favorite></UserRoute>
+        element: <NormalUser><Favorite></Favorite></NormalUser>
       },
       {
         path: 'admin',

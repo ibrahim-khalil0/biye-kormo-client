@@ -36,3 +36,10 @@ input[type="range"] {
 .dashboard a:hover{
     color: black
 }
+
+
+.StripeElement{
+    border: 1px solid #80808061;
+    padding: 8px 0px;
+    border-radius: 4px;
+}

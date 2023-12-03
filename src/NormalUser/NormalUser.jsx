@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../Providers/AuthProviders';
 import axios from 'axios';
 
-const AdminRoute = ({children}) => {
+const NormalUser = ({children}) => {
     const {user} = useContext(AuthContext)
     const [checkAdmin, setCheckAdmin] = useState({})
     const [loading, setLoading] = useState(true)
@@ -21,10 +21,10 @@ const AdminRoute = ({children}) => {
     if(loading){
         return <span className="">Loading</span>
     }
-    if(checkAdmin.isAdmin){
+    if(!checkAdmin.isAdmin){
         return children
     }
     return <Navigate to={'/'}></Navigate>;
 };
 
-export default AdminRoute;
+export default NormalUser;

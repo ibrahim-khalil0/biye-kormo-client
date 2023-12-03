@@ -11,6 +11,7 @@ const AdminDashboard = () => {
       setDataCollection(res.data)
     })
   } , [] )
+
   return (
     <div>
       <div className="container mx-auto mt-8">
@@ -41,7 +42,7 @@ const AdminDashboard = () => {
 
           <div className="bg-green-200 p-6 col-span-2 rounded-md shadow-md">
             <p className="text-xl font-semibold mb-2">Total Revenue</p>
-            <p className="text-3xl">$2000</p>
+            <p className="text-3xl">BDT {dataCollection.revenue}</p>
           </div>
         </div>
       </div>

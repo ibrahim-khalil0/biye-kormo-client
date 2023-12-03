@@ -14,13 +14,13 @@ const Footer = () => {
                     <div className='space-y-3'>
                         <p><Link to={'/'}>Home</Link></p>
                         <p><Link to={'/biodatas'}>Biodatas</Link></p>
-                        <p><Link to={'#'}>Help and Support</Link></p>
+                        <p><Link>Help and Support</Link></p>
                        
                     </div>
                     <div className='space-y-3'>
                         <p><Link to={'/about'}>About Us</Link></p>
-                        <p><Link to={'contactUs'}>Contact Us</Link></p>
-                        <p><Link to={'#'}>Privacy Policy</Link></p>
+                        <p><Link to={'contact'}>Contact Us</Link></p>
+                        <p><Link>Privacy Policy</Link></p>
                        
                     </div>
                 </div>

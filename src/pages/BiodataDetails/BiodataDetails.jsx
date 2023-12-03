@@ -31,8 +31,10 @@ const BiodataDetails = () => {
   useEffect( () => {
     axiosSecure(`sortType/${biodataType}`)
     .then(res => {
-      const total = res.data.filter(data => data.biodataId != biodataId)
-      setSimiler(total)
+      if(res.data.length){
+        const total = res.data.filter(data => data.biodataId != biodataId)
+        setSimiler(total)
+      }
     })
   }, [biodataType, id, biodataId])
 

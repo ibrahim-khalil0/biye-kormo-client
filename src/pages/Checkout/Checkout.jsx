@@ -2,6 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProviders";
 import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "./CheckoutForm";
+
+
+const stripePromise = loadStripe('pk_test_51OJ8WDJUPNMPvH1OKBZHeVzTYvgpP5UMWqVaCCu1pKdbubn1WFvmNWkLcxSEi4oM1sxqcfHgThfsqDwm1adUFBA100azQk00cC')
 
 const Checkout = () => {
 
@@ -28,7 +34,6 @@ const Checkout = () => {
 
 
   const handleContactRequest = e => {
-    e.preventDefault()
     
     contactBiodata.requesterEmail = selfBiodata.contactEmail
     contactBiodata.requesterName = selfBiodata.name
@@ -37,14 +42,12 @@ const Checkout = () => {
     delete contactBiodata._id
     contactBiodata._id = selfBiodata.contactEmail + contactBiodata.biodataId
 
-    console.log(contactBiodata)
-    console.log(selfBiodata.contactEmail)
 
     axios.post('https://biye-kormo-server.vercel.app/contactRequest', contactBiodata)
-    .then(res => {
-      console.log(res.data)
-    })
+  
   }
+
+
 
 
   return (
@@ -54,7 +57,8 @@ const Checkout = () => {
         </div>
       <div className="flex items-center justify-center">
         <div className="bg-white p-8 rounded shadow-md w-1/2">
-          <form onSubmit={handleContactRequest}>
+          {/* <form onSubmit={handleContactRequest}> */}
+
             <div className="mb-4">
               <label
                 htmlFor="biodataId"
@@ -106,28 +110,12 @@ const Checkout = () => {
               />
             </div>
 
-            <div className="mb-4">
-              <label
-                htmlFor="stripeCardNumber"
-                className="block text-sm font-semibold text-gray-600"
-              >
-                Stripe Card Number
-              </label>
-              <input
-                type="text"
-                id="stripeCardNumber"
-                name="stripeCardNumber"
-                className="form-input mt-1 p-2 border border-gray-300 rounded-md w-full"
-              />
+            <div className="mb-4 payment">
+              <Elements stripe={stripePromise}>
+                <CheckoutForm contactRequest={handleContactRequest}></CheckoutForm>
+              </Elements>
             </div>
 
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-            >
-              Submit
-            </button>
-          </form>
         </div>
       </div>
     </div>

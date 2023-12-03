@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { FaHome, FaRegEdit, FaRegHeart } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProviders";
 import axios from "axios";
 
@@ -10,16 +10,22 @@ const Dashboard = () => {
 
   const [checkAdmin, setCheckAdmin] = useState({})
   const {logOut, user} = useContext(AuthContext)
+  const [loading, setLoading] = useState(true)
 
   useEffect( () => {
     axios(`https://biye-kormo-server.vercel.app/biodata/${user?.email}`)
     .then(res => {
-      setCheckAdmin(res.data)
+      if(res.data.isAdmin){
+        setCheckAdmin(res.data)
+      }
+      setLoading(false)
     })
   }, [user])
 
+
   const handleLogOut = () => {
     logOut()
+
   }
 
   return (
@@ -34,7 +40,8 @@ const Dashboard = () => {
         </Link>
         <h3 className="text-center text-2xl mb-10">Biye Kormo</h3>
 
-        {checkAdmin.isAdmin ? (
+        {
+          loading ? '' : <div>{checkAdmin.isAdmin ? (
             // admin dashboard 
           <div className="text-white text-[18px] flex flex-col gap-6">
             <NavLink to={"/dashboard/admin"}>
@@ -104,7 +111,8 @@ const Dashboard = () => {
               Logout
             </button>
           </div>
-        )}
+        )}</div>
+        }
 
       </div>
 
