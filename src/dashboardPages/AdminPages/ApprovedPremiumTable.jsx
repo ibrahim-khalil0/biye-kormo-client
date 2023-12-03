@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { AiFillDelete } from "react-icons/ai";
 import { FaUserCircle, FaCrown } from "react-icons/fa";
+import axios from 'axios';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -33,9 +34,20 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-const rows = [1, 2, 3, 4];
 
-export default function ApprovedPremiumTable() {
+
+export default function ApprovedPremiumTable({users, setUsers}) {
+
+  const handlePremium = (email) => {
+
+    axios.put(`https://biye-kormo-server.vercel.app/approvedPremium/${email}`)
+    .then(res => {
+      console.log(res.data)
+      const remaining = users.filter(user => user.contactEmail != email)
+      setUsers(remaining)
+    })
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -48,14 +60,14 @@ export default function ApprovedPremiumTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {users.map(user => (
+            <StyledTableRow key={user._id}>
               <StyledTableCell component="th" scope="row">
-                n
+                {user.name}
               </StyledTableCell>
-              <StyledTableCell align="center">a</StyledTableCell>
-              <StyledTableCell align="center">1</StyledTableCell>
-              <StyledTableCell align="right"><button className='text-sky-500 text-xl'><FaUserCircle></FaUserCircle></button></StyledTableCell>
+              <StyledTableCell align="center">{user.contactEmail}</StyledTableCell>
+              <StyledTableCell align="center">{user.biodataId}</StyledTableCell>
+              <StyledTableCell align="right"><button onClick={() => handlePremium(user.contactEmail)} className='bg-[#9D6824] rounded-md px-2 py-1 text-white'>Make Premium</button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

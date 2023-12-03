@@ -5,7 +5,6 @@ import Footer from '../../sharedComponents/Footer/Footer';
 
 const Root = () => {
     const location = useLocation()
-    console.log(location)
     const noHeaderFooter = location.pathname.includes('login') || location.pathname.includes('register')
     return (
         <div className='max-w-[1600px] mx-auto'>

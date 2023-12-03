@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import Root from './layouts/Root/Root';
 import Home from './pages/Home/Home';
-import BioData from './pages/Biodata/Biodata';
+import BioData from './pages/BioData/AllBioData';
 import BiodataDetails from './pages/BioDataDetails/BiodataDetails';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
@@ -23,8 +23,16 @@ import Favorite from './dashboardPages/UserPages/Favorite';
 import ManageUsers from './dashboardPages/AdminPages/ManageUsers';
 import ApprovedPremium from './dashboardPages/AdminPages/ApprovedPremium';
 import ContactRequestApproved from './dashboardPages/AdminPages/ContactRequest';
+import {
+  QueryClient,
+  QueryClientProvider
+} from '@tanstack/react-query'
+import About from './pages/About/About';
+import AdminRoute from './AdminRoute/AdminRoute';
+import UserRoute from './UserRoute/UserRoute';
 
-const isPremium = true
+const queryClient = new QueryClient()
+
 
 
 
@@ -54,8 +62,12 @@ const route = createBrowserRouter([
         element: <Checkout></Checkout>
       },
       {
-        path: '/biodataDetails',
+        path: '/biodata/:id',
         element: <PrivateRoute><BiodataDetails></BiodataDetails></PrivateRoute>
+      },
+      {
+        path: '/about',
+        element: <About></About>
       }
     ]
   },
@@ -67,40 +79,36 @@ const route = createBrowserRouter([
     element: <Dashboard></Dashboard>,
     children: [
       {
-        path: '/dashboard',
-        element: isPremium ? <AdminDashboard></AdminDashboard> : <Biodata></Biodata>
-      },
-      {
         path: 'biodata',
-        element: <Biodata></Biodata>
+        element: <UserRoute><Biodata></Biodata></UserRoute>
       },
       {
         path: 'edit',
-        element: <EditBiodata></EditBiodata>
+        element: <UserRoute><EditBiodata></EditBiodata></UserRoute>
       },
       {
         path: 'contactRequest',
-        element: <MyContactRequest></MyContactRequest>
+        element: <UserRoute><MyContactRequest></MyContactRequest></UserRoute>
       },
       {
         path: 'favorite',
-        element: <Favorite></Favorite>
+        element: <UserRoute><Favorite></Favorite></UserRoute>
       },
       {
         path: 'admin',
-        element: <AdminDashboard></AdminDashboard>
+        element: <AdminRoute><AdminDashboard></AdminDashboard></AdminRoute>
       },
       {
         path: 'manageUser',
-        element: <ManageUsers></ManageUsers>
+        element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
       },
       {
         path: 'premiumRequest',
-        element: <ApprovedPremium></ApprovedPremium>
+        element: <AdminRoute><ApprovedPremium></ApprovedPremium></AdminRoute>
       },
       {
         path: 'contactRequestApproved',
-        element: <ContactRequestApproved></ContactRequestApproved>
+        element: <AdminRoute><ContactRequestApproved></ContactRequestApproved></AdminRoute>
       }
     ]
   }
@@ -110,7 +118,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
 
       <AuthProviders>
-        <RouterProvider router={route}></RouterProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={route}></RouterProvider>
+        </QueryClientProvider>
+        
       </AuthProviders>
 
   </React.StrictMode>,

@@ -7,8 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { AiFillDelete } from "react-icons/ai";
-import { FaUserCircle, FaCrown } from "react-icons/fa";
+import axios from 'axios';
+
+
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -32,9 +33,28 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-const rows = [1, 2, 3, 4];
+export default function ManageUserTable({users, premium, setPremium, admin, setAdmin}) {
 
-export default function ManageUserTable() {
+
+  const handlePremium = (email) => {
+
+    axios.put(`https://biye-kormo-server.vercel.app/approvedPremium/${email}`)
+    .then(res => {
+      console.log(res.data)
+      setPremium(admin + 1)
+    })
+  }
+
+
+  const handleAdmin = (email) => {
+
+    axios.put(`https://biye-kormo-server.vercel.app/makeAdmin/${email}`)
+    .then(res => {
+      console.log(res.data)
+      setAdmin(admin + 1)
+    })
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -47,14 +67,14 @@ export default function ManageUserTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {users.map(user => (
+            <StyledTableRow key={user._id}>
               <StyledTableCell component="th" scope="row">
-                n
+                {user.name}
               </StyledTableCell>
-              <StyledTableCell align="center">a</StyledTableCell>
-              <StyledTableCell align="center"><button className='text-sky-500 text-xl'><FaUserCircle></FaUserCircle></button></StyledTableCell>
-              <StyledTableCell align="right"><button className='text-red-500'><FaCrown></FaCrown></button></StyledTableCell>
+              <StyledTableCell align="center">{user.contactEmail}</StyledTableCell>
+              <StyledTableCell align="center">{user.isAdmin ? <span className='text-lg'>Admin</span> : <button onClick={() => handleAdmin(user.contactEmail)} className='bg-[#9D6824] rounded-md px-2 py-1 text-white'>Make Admin</button>} </StyledTableCell>
+              <StyledTableCell align="right">{user.isPremium == 'accepted' ? <span className='text-lg'>Premium</span> : <button onClick={() => handlePremium(user.contactEmail)} className='bg-[#9D6824] rounded-md px-2 py-1 text-white'>Make Premium</button>}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

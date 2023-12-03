@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { AiFillDelete } from "react-icons/ai";
 import { FaUserCircle, FaCrown } from "react-icons/fa";
+import axios from 'axios';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -32,9 +33,20 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-const rows = [1, 2, 3, 4];
 
-export default function contactRequestTable() {
+export default function contactRequestTable({users, setUsers}) {
+
+  const handleApproved = (email) => {
+
+    axios.put(`https://biye-kormo-server.vercel.app/approvedContactRequest/${email}`)
+    .then(res => {
+      console.log(res.data)
+      const remaining = users.filter(user => user._id != email)
+      setUsers(remaining)
+    })
+  }
+
+  
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -42,19 +54,21 @@ export default function contactRequestTable() {
           <TableRow>
             <StyledTableCell>Name</StyledTableCell>
             <StyledTableCell align="center">Biodata Id</StyledTableCell>
+            <StyledTableCell align="center">Request For (Id)</StyledTableCell>
             <StyledTableCell align="center">Email</StyledTableCell>
             <StyledTableCell align="right">Approved contact request</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {users.map(user => (
+            <StyledTableRow key={user._id}>
               <StyledTableCell component="th" scope="row">
-                n
+                {user.requesterName}
               </StyledTableCell>
-              <StyledTableCell align="center">a</StyledTableCell>
-              <StyledTableCell align="center"><button className='text-sky-500 text-xl'><FaUserCircle></FaUserCircle></button></StyledTableCell>
-              <StyledTableCell align="right"><button className='text-red-500'><FaCrown></FaCrown></button></StyledTableCell>
+              <StyledTableCell align="center">{user.requesterBiodataId}</StyledTableCell>
+              <StyledTableCell align="center">{user.biodataId}</StyledTableCell>
+              <StyledTableCell align="center">{user.requesterEmail}</StyledTableCell>
+              <StyledTableCell align="right"><button onClick={() => handleApproved(user._id)} className='bg-[#9D6824] rounded-md px-2 py-1 text-white'>Approve</button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

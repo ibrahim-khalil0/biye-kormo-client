@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { AiFillDelete } from "react-icons/ai";
+import axios from 'axios';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -30,9 +31,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-const rows = [1, 2, 3, 4];
 
-export default function FavoriteTable() {
+
+export default function FavoriteTable({favorites, setFavorites}) {
+
+  const handleDelete = (id) => {
+    axios.delete(`https://biye-kormo-server.vercel.app/deleteFavorite/${id}`)
+    .then(res => {
+      console.log(res)
+      const remaining = favorites.filter( biodata => biodata._id != id)
+      setFavorites(remaining)
+    })
+  }
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -46,15 +56,15 @@ export default function FavoriteTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {favorites.map(favorite => (
+            <StyledTableRow key={favorite._id}>
               <StyledTableCell component="th" scope="row">
-                n
+                {favorite.name}
               </StyledTableCell>
-              <StyledTableCell align="center">a</StyledTableCell>
-              <StyledTableCell align="center">b</StyledTableCell>
-              <StyledTableCell align="center">c</StyledTableCell>
-              <StyledTableCell align="right"><button className='text-red-500'><AiFillDelete></AiFillDelete></button></StyledTableCell>
+              <StyledTableCell align="center">{favorite.biodataId}</StyledTableCell>
+              <StyledTableCell align="center">{favorite.permanentDivision}</StyledTableCell>
+              <StyledTableCell align="center">{favorite.occupation}</StyledTableCell>
+              <StyledTableCell align="right"><button onClick={() => handleDelete(favorite._id)} className='text-red-500'><AiFillDelete></AiFillDelete></button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

@@ -12,7 +12,7 @@ const Home = () => {
             <PremiumMember></PremiumMember>
             <HowWebsiteWork></HowWebsiteWork>
             <SuccessCounter></SuccessCounter>
-            <SuccessStory></SuccessStory>
+            {/* <SuccessStory></SuccessStory> */}
         </div>
     );
 };

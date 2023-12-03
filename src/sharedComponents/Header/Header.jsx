@@ -1,12 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../Providers/AuthProviders';
+import axios from 'axios';
 
 const Header = () => {
-    const {user, logOut} = useContext(AuthContext)
-    const handleLogOut = () => {
-        logOut()
-    }
+    const {user} = useContext(AuthContext)
+    const [checkAdmin, setCheckAdmin] = useState({})
+
+    useEffect( () => {
+        axios(`https://biye-kormo-server.vercel.app/biodata/${user?.email}`)
+        .then(res => {
+          setCheckAdmin(res.data)
+        })
+      }, [user])
+
+
     return (
         <div className='sm:flex justify-between items-center'>
             <div className='flex justify-center sm:justify-start items-center gap-1'>
@@ -19,7 +27,7 @@ const Header = () => {
                 <NavLink to={'/about'}>About Us</NavLink>
                 <NavLink to={'/contact'}>Contact</NavLink>
                 {
-                    user ? <NavLink to={'/dashboard'}>Dashboard</NavLink> : <NavLink to={'/login'}>Login</NavLink>
+                    user ? <NavLink to={checkAdmin.isAdmin ? '/dashboard/admin' : '/dashboard/biodata'}>Dashboard</NavLink> : <NavLink to={'/login'}>Login</NavLink>
                 }
             </div>
         </div>

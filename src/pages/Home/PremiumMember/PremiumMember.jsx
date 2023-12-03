@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa6";
 import MemberCard from "./MemberCard";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const PremiumMember = () => {
+  const [biodata, setBiodata] = useState([])
+
+  const axiosSecure = useAxiosSecure()
+
+  useEffect( () => {
+    axiosSecure.get('/premiumBiodata')
+    .then( res => {
+      setBiodata(res.data)
+    })
+  }, [])
+
   return (
     <div>
 
@@ -24,12 +36,9 @@ const PremiumMember = () => {
           {/* premium members details card  */}
       <div>
         <div className="flex justify-around flex-wrap mx-[5%] lg:mx-[8%] gap-4 pb-20">
-          <MemberCard></MemberCard>
-          <MemberCard></MemberCard>
-          <MemberCard></MemberCard>
-          <MemberCard></MemberCard>
-          <MemberCard></MemberCard>
-          <MemberCard></MemberCard>
+          {
+            biodata.map(data => <MemberCard key={data._id} biodata={data}></MemberCard>)
+          }
         </div>
       </div>
     </div>

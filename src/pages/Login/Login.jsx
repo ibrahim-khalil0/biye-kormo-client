@@ -9,7 +9,6 @@ const Login = () => {
     const [error, setError] = useState(null)
     const location = useLocation()
     const navigate = useNavigate()
-    console.log(location)
 
     const handleGoogleLogin = () => {
         loginWithGoogle()

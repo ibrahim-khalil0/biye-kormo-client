@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { AiFillDelete } from "react-icons/ai";
+import axios from 'axios';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -30,9 +31,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-const rows = [1, 2, 3, 4];
 
-export default function CustomizedTables() {
+
+export default function CustomizedTables({biodata, setContacts}) {
+
+  const handleDelete = (id) => {
+    axios.delete(`https://biye-kormo-server.vercel.app/deleteContactRequest/${id}`)
+    .then(res => {
+      console.log(res)
+      const remaining = biodata.filter( biodata => biodata._id != id)
+      setContacts(remaining)
+    })
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -41,22 +52,22 @@ export default function CustomizedTables() {
             <StyledTableCell>Name</StyledTableCell>
             <StyledTableCell align="center">Biodata Id</StyledTableCell>
             <StyledTableCell align="center">Status</StyledTableCell>
-            <StyledTableCell align="center">Status</StyledTableCell>
+            <StyledTableCell align="center">Mobile N.</StyledTableCell>
             <StyledTableCell align="center">Email</StyledTableCell>
             <StyledTableCell align="right">Delete</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {biodata.map(data => (
+            <StyledTableRow key={data._id}>
               <StyledTableCell component="th" scope="row">
-                n
+                {data.name}
               </StyledTableCell>
-              <StyledTableCell align="center">a</StyledTableCell>
-              <StyledTableCell align="center">b</StyledTableCell>
-              <StyledTableCell align="center">c</StyledTableCell>
-              <StyledTableCell align="center">d</StyledTableCell>
-              <StyledTableCell align="right"><button className='text-red-500'><AiFillDelete></AiFillDelete></button></StyledTableCell>
+              <StyledTableCell align="center">{data.biodataId}</StyledTableCell>
+              <StyledTableCell align="center">{data.status}</StyledTableCell>
+              <StyledTableCell align="center">{data.status == 'approved' ? data.mobileNumber : 'Request Not Accepted Yet'}</StyledTableCell>
+              <StyledTableCell align="center">{data.status == 'approved' ? data.contactEmail : 'Request Not Accepted Yet'}</StyledTableCell>
+              <StyledTableCell align="right"><button onClick={() => handleDelete(data._id)} className='text-red-500'><AiFillDelete></AiFillDelete></button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
