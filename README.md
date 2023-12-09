@@ -1,4 +1,4 @@
-## Live Link : 656cbf287bad532ba6c6be80--zippy-medovik-168cdc.netlify.app	
+## Live Link : https://656cbf287bad532ba6c6be80--zippy-medovik-168cdc.netlify.app
 
 - It is a marriage related website.
 - In this project added normal user and admin functionality.
