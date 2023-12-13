@@ -29,8 +29,7 @@ import {
 } from '@tanstack/react-query'
 import About from './pages/About/About';
 import AdminRoute from './AdminRoute/AdminRoute';
-import UserRoute from './UserRoute/UserRoute';
-import NormalUser from './NormalUser/NormalUser';
+
 import ContactUs from './ContactUs/ContactUs';
 
 const queryClient = new QueryClient()
@@ -88,19 +87,19 @@ const route = createBrowserRouter([
     children: [
       {
         path: 'biodata',
-        element: <NormalUser><Biodata></Biodata></NormalUser>
+        element: <Biodata></Biodata>
       },
       {
         path: 'edit',
-        element: <NormalUser><EditBiodata></EditBiodata></NormalUser>
+        element: <EditBiodata></EditBiodata>
       },
       {
         path: 'contactRequest',
-        element: <NormalUser><MyContactRequest></MyContactRequest></NormalUser>
+        element: <MyContactRequest></MyContactRequest>
       },
       {
         path: 'favorite',
-        element: <NormalUser><Favorite></Favorite></NormalUser>
+        element: <Favorite></Favorite>
       },
       {
         path: 'admin',

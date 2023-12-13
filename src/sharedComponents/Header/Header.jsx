@@ -5,14 +5,6 @@ import axios from 'axios';
 
 const Header = () => {
     const {user} = useContext(AuthContext)
-    const [checkAdmin, setCheckAdmin] = useState({})
-
-    useEffect( () => {
-        axios(`https://biye-kormo-server.vercel.app/biodata/${user?.email}`)
-        .then(res => {
-          setCheckAdmin(res.data)
-        })
-      }, [user])
 
 
     return (
@@ -26,8 +18,9 @@ const Header = () => {
                 <NavLink to={'/biodatas'}>Biodatas</NavLink>
                 <NavLink to={'/about'}>About Us</NavLink>
                 <NavLink to={'/contact'}>Contact</NavLink>
+                
                 {
-                    user ? <NavLink to={checkAdmin.isAdmin ? '/dashboard/admin' : '/dashboard/biodata'}>Dashboard</NavLink> : <NavLink to={'/login'}>Login</NavLink>
+                    user ? <NavLink to={'/dashboard/biodata'}>Dashboard</NavLink> : <NavLink to={'/login'}>Login</NavLink>
                 }
             </div>
         </div>
